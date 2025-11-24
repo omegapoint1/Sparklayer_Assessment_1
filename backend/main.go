@@ -16,7 +16,11 @@ type Todo struct {
 var todos []Todo
 
 func main() {
-	// Your code here
+	// when svelte frontend makes a request to the root path (which it already does), call ToDoListHandler
+	http.HandleFunc("/", ToDoListHandler)
+
+	// start the server on port 8080. nil should cause root requests to be handled by ToDoListHandler
+	http.ListenAndServe(":8080", nil)
 }
 
 func ToDoListHandler(w http.ResponseWriter, r *http.Request) {
