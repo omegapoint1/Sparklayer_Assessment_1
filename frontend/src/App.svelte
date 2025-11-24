@@ -63,6 +63,8 @@
       //  add the newly created item to the todos array to update the UI
       todos = todos.concat(newTodo);
 
+      //clear the forms inputs after successfull addition
+      form.reset();
     
     //if the try fails, then it is most likely no server was found, so throw error that no server could be connected to.
     } catch (e) {
