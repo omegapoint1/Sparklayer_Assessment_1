@@ -92,7 +92,7 @@
   <h2 class="todo-list-form-header">Add a Todo</h2>
 
   <!-- added a call to handleAddTodo when the form is submitted -->
-  <form class="todo-list-form">
+  <form class="todo-list-form" onsubmit={handleAddTodo}>
     <input placeholder="Title" name="title" />
     <input placeholder="Description" name="description" />
     <button>Add Todo</button>
