@@ -23,6 +23,8 @@
   //when add todo button is pressed, this function should be called. It seems to innately contain the event parameter despite being called without arguments.
   async function handleAddTodo(event: Event) {
 
+    event.preventDefault(); // I had to add this to prevent the page from reloading on form submission which was breaking functionality
+
     // get the form that triggered the event
     const form = event.target as HTMLFormElement; // I needed to explicitly define the type here to avoid an error just below this
 
