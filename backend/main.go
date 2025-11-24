@@ -33,9 +33,21 @@ func ToDoListHandler(w http.ResponseWriter, r *http.Request) {
 
 	// when svelte frontend sends a GET request, it expects a JSON containing all Todo items
 	case "GET":
-		// Try to send the whole array of Todo items as JSON, which the frontend expects
+		// Try to send the whole array of Todo items as JSON, which the frontend expects.
 
-		// A status code should be returned (200 on success) as per the spec
+		// create a new JSON encoder using the writer, which should send data back to the frontend correctly
+		encoder := json.NewEncoder(w)
+
+		// encode the Todo array as JSON using the encoder object. This seems to send the data back to the frontend directly.
+		err := encoder.Encode(todos)
+
+		//the status code should be returned automatically by the encoder (200 on success) as per the spec
+
+		// basic error handling
+        if err != nil {
+			http.Error(w, "Unable to encode todos as JSON", http.StatusInternalServerError)
+			return
+		}
 
 
 	// if svelte frontend sends a POST request, it is submitting a new Todo item to be added to the list
