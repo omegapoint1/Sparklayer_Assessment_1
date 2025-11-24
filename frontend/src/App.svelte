@@ -6,6 +6,8 @@
 
   async function fetchTodos() {
     try {
+
+      // sends a GET request to the backend server
       const response = await fetch("http://localhost:8080/");
       if (response.status !== 200) {
         console.error("Error fetching data. Response status not 200");
@@ -16,6 +18,11 @@
     } catch (e) {
       console.error("Could not connect to server. Ensure it is running.", e);
     }
+  }
+
+  //when add todo button is pressed, this function should be called. It seems to innately contain the event parameter despite being called without arguments.
+  async function handleAddTodo(event: Event) {
+  
   }
 
   // Initially fetch todos on page load
@@ -36,6 +43,8 @@
   </div>
 
   <h2 class="todo-list-form-header">Add a Todo</h2>
+
+  <!-- added a call to handleAddTodo when the form is submitted -->
   <form class="todo-list-form">
     <input placeholder="Title" name="title" />
     <input placeholder="Description" name="description" />

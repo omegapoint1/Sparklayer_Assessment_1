@@ -3,11 +3,11 @@ package main
 import "net/http"
 import "encoding/json"
 
-/* 	initial Todo struct, representing a single item on a to-do list. 
-	Could be expanded with additional fields, like times/dates, priorities, etc.) if wanted.	*/
+/* 	initial Todo struct, representing a single item on a to-do list 
+	Could be expanded with additional fields, like times/dates, priorities, etc.) if wanted	*/
 type Todo struct {
 
-	// using JSON "struct tags" so that when the struct is converted to/from JSON the field names are kept.
+	// using JSON "struct tags" so that when the struct is converted to/from JSON the field names are kept
     Title       string `json:"title"`
     Description string `json:"description"`
 }
@@ -23,8 +23,27 @@ func main() {
 	http.ListenAndServe(":8080", nil)
 }
 
+// w is the "writer", meaning it used to send a response back to the frontend
+// r is the "request", meaning it contains all information from the frontends request
 func ToDoListHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
-	// Your code here
+	//using a switch statement instead of multiple if-elses for clarity
+	switch r.Method {
+
+	// when svelte frontend sends a GET request, it expects a JSON containing all Todo items
+	case "GET":
+		// Try to send the whole array of Todo items as JSON, which the frontend expects
+
+		// A status code should be returned (200 on success) as per the spec
+
+
+	// if svelte frontend sends a POST request, it is submitting a new Todo item to be added to the list
+	case "POST":
+		//Try to decode the JSON sent by the frontend into a new Todo struct and add it to the memory array
+
+		//A status code should be returned (200 on success, 400 for invalid input")
+
+		//Also send back the new todo as confirmation, as the spec outlines
+	}
 }
