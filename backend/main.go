@@ -54,8 +54,31 @@ func ToDoListHandler(w http.ResponseWriter, r *http.Request) {
 	case "POST":
 		//Try to decode the JSON sent by the frontend into a new Todo struct and add it to the memory array
 
-		//A status code should be returned (200 on success, 400 for invalid input")
+		// when a POST request is received a new Todo struct is needed to hold the incoming data, so create one
+        var newTodo Todo
 
-		//Also send back the new todo as confirmation, as the spec outlines
+        // Reading the new todo sent by the frontend
+        
+		// r contains multiple fields. body is most commonly used to hold the main data
+		// decoders in GO need to be created using the data they will decode
+		decoder := json.NewDecoder(r.Body)
+
+		// passes "newTodo" by reference, and the decoder fills it in with data reading from r.Body
+		err := decoder.Decode(&newTodo)
+		
+		//the status code should be returned automatically by the decoder (200 on success, 400 on invalid input")
+
+		// basic error handling, if the decoding fails, send back a bad request error
+        if err != nil {
+            // Send error message if decoding fails
+            http.Error(w, "Bad request", http.StatusBadRequest)
+            return
+        }
+
+        // add the newly written Todo to the Todo array
+        todos = append(todos, newTodo)
+
+        //Also send back the new todo as confirmation, as the spec outlines
+        json.NewEncoder(w).Encode(newTodo)
 	}
 }
