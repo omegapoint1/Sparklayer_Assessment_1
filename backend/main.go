@@ -80,5 +80,19 @@ func ToDoListHandler(w http.ResponseWriter, r *http.Request) {
 
         //Also send back the new todo as confirmation, as the spec outlines
         json.NewEncoder(w).Encode(newTodo)
+
+	//following errors with "CORS preflight" requests, I needed to include this so that initial OPTIONS requests from browsers are not rejected
+	// I found this at "https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS"
+	case "OPTIONS":	
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+		w.WriteHeader(http.StatusOK)
+		return
+
+	//if no other cases apply
+	default:
+        // only GET, POST and OPTIONS methods are allowed, so refuse any other requests
+        http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}
 }
