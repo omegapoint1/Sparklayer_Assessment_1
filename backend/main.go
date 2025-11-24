@@ -16,6 +16,8 @@ type Todo struct {
 var todos []Todo
 
 func main() {
+	todos = []Todo{} // Ensures todos is not nil to avoid error in displaying the list when empty
+
 	// when svelte frontend makes a request to the root path (which it already does), call ToDoListHandler
 	http.HandleFunc("/", ToDoListHandler)
 
