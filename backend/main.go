@@ -71,7 +71,8 @@ func ToDoListHandler(w http.ResponseWriter, r *http.Request) {
 		//the status code should be returned automatically by the decoder (200 on success, 400 on invalid input")
 
 		// basic error handling, if the decoding fails, send back a bad request error
-        if err != nil {
+		//additionally, added input validation to ensure title and description are not empty
+        if err != nil  || newTodo.Title == "" || newTodo.Description == "" {
             // Send error message if decoding fails
             http.Error(w, "Bad request", http.StatusBadRequest)
             return
