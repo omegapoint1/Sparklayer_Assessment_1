@@ -22,14 +22,51 @@
 
   //when add todo button is pressed, this function should be called. It seems to innately contain the event parameter despite being called without arguments.
   async function handleAddTodo(event: Event) {
-    // get the form that triggered the event, and parse its data
 
-    // after parsing data, send the request to the backend
-    // at port 8080, in JSON format
+    // get the form that triggered the event
+    const form = event.target as HTMLFormElement; // I needed to explicitly define the type here to avoid an error just below this
 
-    // the backend should return the newly created todo item as confirmation, if successful, as the spec outlines
-  
-    // add the newly created item to the todos array to update the UI
+    // extract all the form data
+    const data = new FormData(form); // form was throwing an error here, so I explicitly defined its type above
+
+    // get each value by its field name
+    const title = data.get("title");
+    const description = data.get("description");
+
+    // after parsing data, send the request to the backend. Using a try to stop errors from causing crashes
+    try {
+
+      //send the POST request to the server at the correct port 8080
+      const response = await fetch("http://localhost:8080/", {
+
+        method: "POST",
+
+        //specifies JSON content using a standard header
+        headers: { "Content-Type": "application/json" },
+
+        //attempt to build the JSON and send it, reading in the following format:
+        // send this data:  JSON object
+        body: JSON.stringify({ title, description })
+      });
+
+      // log an error in the console if the response is anything other than 200 (200 means success)
+      if (response.status !== 200) {
+        console.error("Failed to add todo.");
+        return;
+      }
+
+      // the backend should return the newly created todo item as confirmation, if successful, as the spec outlines
+      const newTodo = await response.json();
+
+      //  add the newly created item to the todos array to update the UI
+      //"..." operator means a new array is created instead of updating the existing one
+      todos = [...todos, newTodo];
+
+    
+    //if the try fails, then it is most likely no server was found, so throw error that no server could be connected to.
+    } catch (e) {
+      console.error("Could not connect to server to add todo.", e);
+    }
 
   }
 
