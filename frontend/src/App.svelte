@@ -61,8 +61,7 @@
       const newTodo = await response.json();
 
       //  add the newly created item to the todos array to update the UI
-      //"..." operator means a new array is created instead of updating the existing one
-      todos = [...todos, newTodo];
+      todos = todos.concat(newTodo);
 
     
     //if the try fails, then it is most likely no server was found, so throw error that no server could be connected to.
