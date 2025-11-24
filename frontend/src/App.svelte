@@ -22,7 +22,15 @@
 
   //when add todo button is pressed, this function should be called. It seems to innately contain the event parameter despite being called without arguments.
   async function handleAddTodo(event: Event) {
+    // get the form that triggered the event, and parse its data
+
+    // after parsing data, send the request to the backend
+    // at port 8080, in JSON format
+
+    // the backend should return the newly created todo item as confirmation, if successful, as the spec outlines
   
+    // add the newly created item to the todos array to update the UI
+
   }
 
   // Initially fetch todos on page load
